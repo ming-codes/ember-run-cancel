@@ -11,11 +11,12 @@
     "build": "ember build",
     "test": "ember test"
   },
-  "repository": "",
   "engines": {
     "node": ">= 0.10.0"
   },
-  "author": "",
+  "author": "Ming Liu",
+  "repository": "https://github.com/lightblade/ember-run-cancel.git",
+  "homepage": "https://github.com/lightblade/ember-run-cancel",
   "license": "MIT",
   "devDependencies": {
     "broccoli-asset-rev": "^2.0.0",
@@ -36,6 +37,7 @@
     "ember-addon"
   ],
   "ember-addon": {
-    "configPath": "tests/dummy/config"
+    "configPath": "tests/dummy/config",
+    "demoURL": "https://lightblade.github.io/ember-run-cancel"
   }
 }
