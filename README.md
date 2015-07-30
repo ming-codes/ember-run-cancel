@@ -1,4 +1,4 @@
-# Ember-run-cancel
+# ember-run-cancel
 
 [![Build Status](https://travis-ci.org/lightblade/ember-run-cancel.svg?branch=master)](https://travis-ci.org/lightblade/ember-run-cancel)
 [![npm version](https://badge.fury.io/js/ember-run-cancel.svg)](http://badge.fury.io/js/ember-run-cancel)
@@ -6,8 +6,13 @@
 [![Dependency Status](https://david-dm.org/lightblade/ember-run-cancel.svg)](https://david-dm.org/lightblade/ember-run-cancel)
 [![devDependency Status](https://david-dm.org/lightblade/ember-run-cancel/dev-status.svg)](https://david-dm.org/lightblade/ember-run-cancel#info=devDependencies)
 
+`ember-run-cancel` adds a `cancelOnDestroy` on all cancellable `Ember.run` methods to cancel the run when the target object is scheduled for destruction.
 
-This README outlines the details of collaborating on this Ember addon.
+- `Ember.run.later.cancelOnDestroy(target, method, ...)`
+- `Ember.run.once.cancelOnDestroy(target, method, ...)`
+- `Ember.run.next.cancelOnDestroy(target, method, ...)`
+- `Ember.run.debounce.cancelOnDestroy(target, method, ...)`
+- `Ember.run.throttle.cancelOnDestroy(target, method, ...)`
 
 ## Installation
 
