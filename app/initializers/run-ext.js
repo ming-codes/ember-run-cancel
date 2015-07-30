@@ -16,21 +16,21 @@ function wrap(context, method) {
   return method;
 }
 
-function makeCancellable(context) {
+function makeCancellable(context, name) {
   return function wrappedCancellable() {
     var args = Array.prototype.slice.call(arguments);
 
     args[0] = wrap(context, args[0]);
     args[1] = wrap(context, args[1]);
 
-    return Ember.run.later(...args);
+    return Ember.run[name](...args);
   };
 }
 
 export function initialize() {
   Ember.run.cancelOnDestroy = function cancelOnDestroy(context) {
     return [ 'later', 'once', 'next', 'debounce', 'throttle' ].reduce((accum, name) => {
-      accum[name] = makeCancellable(name);
+      accum[name] = makeCancellable(context, name);
 
       return accum;
     }, {});
