@@ -14,35 +14,43 @@ module('RunExtInitializer', {
   }
 });
 
-[ 'later', 'once', 'next', 'debounce', 'throttle' ].forEach((cancellable) => {
-  test(`it should cancel scheduled "${cancellable}" on object destroy`, function(assert) {
+[ 'later', 'once', 'next', 'debounce', 'throttle' ].forEach((runner) => {
+  test(`it should cancel scheduled "${runner}" on object destroy`, function(assert) {
     var obj = Ember.Object.create({});
 
     initialize(container, application);
 
+    stop();
+
     assert.expect(0);
 
     Ember.run(() => {
-      Ember.run.cancelOnDestroy(obj)[cancellable](() => {
-        assert.ok(false, `${cancellable} fired`);
-      });
-
       obj.destroy();
+
+      Ember.run[runner].cancelOnDestroy(obj, () => {
+        assert.ok(false, `${runner} fired`);
+      }, 100);
+
+      setTimeout(start, 300);
     });
 
   });
 
-  test(`it should run scheduled "${cancellable}" on object not destroyed`, function(assert) {
+  test(`it should run scheduled "${runner}" on object NOT destroyed`, function(assert) {
     var obj = Ember.Object.create({});
 
     initialize(container, application);
 
     assert.expect(1);
 
+    stop();
+
     Ember.run(() => {
-      Ember.run.cancelOnDestroy(obj)[cancellable](() => {
-        assert.ok(true, `${cancellable} fired`);
-      });
+      Ember.run[runner].cancelOnDestroy(obj, () => {
+        assert.ok(true, `${runner} fired`);
+      }, 100);
+
+      setTimeout(start, 300);
     });
 
   });

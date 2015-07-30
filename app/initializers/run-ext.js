@@ -1,40 +1,25 @@
 
 import Ember from 'ember';
 
-function wrap(context, method) {
-  var type = typeof method;
-
-  if (type === 'string' || type === 'function') {
-    return function cancellable() {
-      if (!context.isDestroying) {
-        (typeof method === 'string' ? this[method] : method)
-          .apply(this, arguments);
-      }
-    }
-  }
-
-  return method;
-}
-
-function makeCancellable(context, name) {
-  return function wrappedCancellable() {
-    var args = Array.prototype.slice.call(arguments);
-
-    args[0] = wrap(context, args[0]);
-    args[1] = wrap(context, args[1]);
-
-    return Ember.run[name](...args);
-  };
-}
-
 export function initialize() {
-  Ember.run.cancelOnDestroy = function cancelOnDestroy(context) {
-    return [ 'later', 'once', 'next', 'debounce', 'throttle' ].reduce((accum, name) => {
-      accum[name] = makeCancellable(context, name);
+  [ 'later', 'once', 'next', 'debounce', 'throttle' ].forEach((runner) => {
+    Ember.run[runner].cancelOnDestroy = function () {
+      var args = Array.prototype.slice.call(arguments);
+      var [ target, method ] = args;
 
-      return accum;
-    }, {});
-  };
+      Ember.assert('`cancelOnDestroy` requires a target object', Ember.typeOf(target) === 'instance');
+
+      args[1] = function () {
+        var real = typeof method === 'string' ? target[method] : method;
+
+        if (!target.isDestroying) {
+          method.apply(target, arguments);
+        }
+      };
+
+      return Ember.run[runner].apply(Ember.run, args);
+    };
+  });
 }
 
 export default {
