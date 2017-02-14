@@ -1,5 +1,7 @@
 # ember-run-cancel
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/ming-codes/ember-run-cancel.svg)](https://greenkeeper.io/)
+
 [![Build Status](https://travis-ci.org/lightblade/ember-run-cancel.svg?branch=master)](https://travis-ci.org/lightblade/ember-run-cancel)
 [![npm version](https://badge.fury.io/js/ember-run-cancel.svg)](http://badge.fury.io/js/ember-run-cancel)
 [![Code Climate](https://codeclimate.com/github/lightblade/ember-run-cancel/badges/gpa.svg)](https://codeclimate.com/github/lightblade/ember-run-cancel)
